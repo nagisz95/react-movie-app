@@ -22,7 +22,6 @@ function Detail() {
       <Link to={"/"}>
         <FontAwesomeIcon className={styles.backwardArrow} icon={faArrowLeft} />
       </Link>
-
       {loading ? (
         <Loading />
       ) : (
