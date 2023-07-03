@@ -5,7 +5,7 @@ function Home() {
   return (
     <main className={styles.main}>
       <header className={styles.header}>
-        <h1 className={styles.greeting}>🍿What's NEW?</h1>
+        <h1 className={styles.greeting}>🍿BEST MOVIE!</h1>
       </header>
       <div className={styles.slideCenter}>
         <div className={styles.slideWrapper}>

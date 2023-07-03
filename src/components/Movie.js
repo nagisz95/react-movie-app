@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Slide from "./Slide";
+import Loading from "./Loading";
 
 // import required modules, styles for swiper
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -22,13 +23,17 @@ function Movie() {
   }, []);
   return (
     <>
-      <Swiper slidesPerView={4} spaceBetween={30} navigation={true} modules={[Pagination, Navigation]} className="mySwiper">
-        {movies.map((movie) => (
-          <SwiperSlide key={movie.id}>
-            <Slide coverImg={movie.medium_cover_image} id={movie.id} title={movie.title} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {loading ? (
+        <Loading />
+      ) : (
+        <Swiper slidesPerView={4} spaceBetween={30} navigation={true} modules={[Pagination, Navigation]} className="mySwiper">
+          {movies.map((movie) => (
+            <SwiperSlide key={movie.id}>
+              <Slide coverImg={movie.medium_cover_image} id={movie.id} title={movie.title} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
     </>
   );
 }
