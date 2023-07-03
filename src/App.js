@@ -7,9 +7,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        // Detail로 가는 라우터
         <Route path="/movie/:id" element={<Detail />}></Route>
-        // Home으로 가는 라우터
         <Route path="/" element={<Home />}></Route>
       </Routes>
     </Router>

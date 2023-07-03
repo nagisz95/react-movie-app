@@ -1,29 +1,36 @@
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Slide from "./Slide";
 
-function Movie({ id, coverImg, title, synopsis, genres }) {
+// import required modules, styles for swiper
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Pagination, Navigation } from "swiper";
+
+function Movie() {
+  const [loading, setLoading] = useState(true);
+  const [movies, setMovies] = useState([]);
+
+  const getMovies = async () => {
+    const json = await (await fetch(`https://yts.mx/api/v2/list_movies.json?minimum_rating=9&sort_by=year`)).json();
+    setMovies(json.data.movies);
+    setLoading(false);
+  };
+  useEffect(() => {
+    getMovies();
+  }, []);
   return (
-    <div>
-      <img src={coverImg} alt={title} />
-      <h1>
-        <Link to={`/movie/${id}`}>{title}</Link>
-      </h1>
-      <p>{synopsis.length > 235 ? `${synopsis.slice(0, 235)}...` : synopsis}</p>
-      <ul>
-        {genres.map((g) => (
-          <li key={g}>{g}</li>
+    <>
+      <Swiper slidesPerView={4} spaceBetween={30} navigation={true} modules={[Pagination, Navigation]} className="mySwiper">
+        {movies.map((movie) => (
+          <SwiperSlide key={movie.id}>
+            <Slide coverImg={movie.medium_cover_image} id={movie.id} title={movie.title} />
+          </SwiperSlide>
         ))}
-      </ul>
-    </div>
+      </Swiper>
+    </>
   );
 }
-
-Movie.protoTypes = {
-  id: PropTypes.number.isRequired,
-  coverImg: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  synopsis: PropTypes.string.isRequired,
-  genres: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
 
 export default Movie;
